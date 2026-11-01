@@ -1,6 +1,6 @@
 // A count ends with its player's life, and all of them with the world.
-fn potion_hud_tick(game: &mut crate::game::Game<'_>) {
-    use crate::game::{potion_hud as m, potion_hud_players as players};
+fn basic_hud_tick(game: &mut crate::game::Game<'_>) {
+    use crate::game::{basic_hud as m, basic_hud_players as players};
     if !game.native_on(m::ID) || !game.native_window() {
         return;
     }

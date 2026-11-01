@@ -1,10 +1,10 @@
 // The box: effects, then what the player carries, then what is wearing out.
-fn potion_hud_draw(
+fn basic_hud_draw(
     game: &mut crate::game::Game<'_>,
     batch: &mut horizon_client::hud::HudBatch,
     corners: &mut horizon_client::extras_hud::Corners,
 ) {
-    use crate::game::potion_hud as m;
+    use crate::game::basic_hud as m;
     use horizon_client::{extras::Corner, items::ItemStack, lang};
 
     enum Icon {

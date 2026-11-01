@@ -1,5 +1,5 @@
 [mod]
-id = "potion_hud"
+id = "basic_hud"
 version = "0.1.0"
 priority = 100
 
@@ -11,13 +11,13 @@ horizon_revision = "68ac6f647e7022b2c696e81863d7cface28c9416"
 [[module]]
 id = "runtime"
 file = "crates/horizon-client/src/game.rs"
-name = "potion_hud"
+name = "basic_hud"
 source = "runtime.rs"
 
 [[module]]
 id = "players"
 file = "crates/horizon-client/src/game.rs"
-name = "potion_hud_players"
+name = "basic_hud_players"
 source = "players.rs"
 
 [[injection]]

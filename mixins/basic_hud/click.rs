@@ -1,6 +1,6 @@
 // A click on the mod's settings page, kept at once.
-fn potion_hud_click(game: &mut crate::game::Game<'_>, mod_id: &str, button: usize) {
-    use crate::game::potion_hud as m;
+fn basic_hud_click(game: &mut crate::game::Game<'_>, mod_id: &str, button: usize) {
+    use crate::game::basic_hud as m;
     if mod_id != m::ID {
         return;
     }

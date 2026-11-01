@@ -1,6 +1,6 @@
 # The Basic HUD
 
-A native mod for [Horizon](https://playhorizon.dev). In game and in the files it is still called Potion HUD (id `potion_hud`).
+A native mod for [Horizon](https://playhorizon.dev).
 
 ## What it shows
 
@@ -30,7 +30,7 @@ cargo test
 Build the bundle into the game:
 
 ```
-horizon-launcher native-build mixins/potion_hud --trust-native-code
+horizon-launcher native-build mixins/basic_hud --trust-native-code
 ```
 
 Native mods run with your rights and are not sandboxed. Read the source before you build it.

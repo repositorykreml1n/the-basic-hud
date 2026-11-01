@@ -1,14 +1,14 @@
 // A line above the name of each player who has used a totem, drawn as the name
 // is and only on a tag the game decided to show (`name_tags` holds a macro, so
 // horizon-mixins cannot add the line there).
-fn potion_hud_name_tags(
+fn basic_hud_name_tags(
     game: &mut crate::game::Game<'_>,
     camera: glam::DVec3,
     alpha: f64,
     out: &mut Vec<Vertex>,
     see_through: &mut Vec<Vertex>,
 ) {
-    use crate::game::potion_hud as m;
+    use crate::game::basic_hud as m;
     const FADED: u32 = 0x7F;
     if !game.native_on(m::ID) || !m::config(|| game.native_setting(m::ID, "config"), |c| c.totems) {
         return;

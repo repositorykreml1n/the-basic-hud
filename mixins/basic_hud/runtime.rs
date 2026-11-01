@@ -1,4 +1,4 @@
-// Potion HUD: the effects on the player with their time left, the potions,
+// The Basic HUD: the effects on the player with their time left, the potions,
 // golden apples and totems carried, the durability of armour, elytra and
 // shield, and how many totems each player has used. This file is both the
 // mod's Cargo library (its tests) and the module the bundle adds to the game,
@@ -7,8 +7,8 @@ use std::cell::RefCell;
 use std::collections::{BTreeSet, HashMap};
 
 /// The mod's id (its settings folder), name and version.
-pub const ID: &str = "potion_hud";
-pub const NAME: &str = "Potion HUD";
+pub const ID: &str = "basic_hud";
+pub const NAME: &str = "The Basic HUD";
 pub const VERSION: &str = "0.1.0";
 pub const DESCRIPTION: &str = "Effect timers, potions, golden apples and totems carried, totems used by each player, and armour, elytra and shield durability.";
 pub const BACKGROUND: u32 = 0x7800_0000;

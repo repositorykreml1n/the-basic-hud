@@ -1,6 +1,6 @@
 // The mod's settings page: its parts, then a pin for each effect.
-fn potion_hud_page(game: &mut crate::game::Game<'_>, mod_id: &str, buttons: &mut Vec<String>) {
-    use crate::game::potion_hud as m;
+fn basic_hud_page(game: &mut crate::game::Game<'_>, mod_id: &str, buttons: &mut Vec<String>) {
+    use crate::game::basic_hud as m;
     if mod_id != m::ID {
         return;
     }

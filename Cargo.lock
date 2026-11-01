@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "horizon-mod-potion-hud"
+name = "horizon-mod-basic-hud"
 version = "0.1.0"
