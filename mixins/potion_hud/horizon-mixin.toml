@@ -1,0 +1,97 @@
+[mod]
+id = "potion_hud"
+version = "0.1.0"
+priority = 100
+
+# Counting totems and writing above a player's head hook the game's own
+# functions, which have no hook point, so it builds on this commit only.
+[compatibility]
+horizon_revision = "68ac6f647e7022b2c696e81863d7cface28c9416"
+
+[[module]]
+id = "runtime"
+file = "crates/horizon-client/src/game.rs"
+name = "potion_hud"
+source = "runtime.rs"
+
+[[module]]
+id = "players"
+file = "crates/horizon-client/src/game.rs"
+name = "potion_hud_players"
+source = "players.rs"
+
+[[injection]]
+id = "hud"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_hud"
+helper = "hud.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "batch", ty = "&mut horizon_client::hud::HudBatch", value = "&mut *batch" },
+  { name = "corners", ty = "&mut horizon_client::extras_hud::Corners", value = "&mut *corners" },
+]
+
+[[injection]]
+id = "tick"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_tick"
+helper = "tick.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+]
+
+[[injection]]
+id = "list"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_mods"
+helper = "list.rs"
+bindings = [
+  { name = "mods", ty = "&mut Vec<crate::game::native_hooks::NativeMod>", value = "&mut *mods" },
+]
+
+[[injection]]
+id = "settings"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_settings"
+helper = "settings.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "mod_id", ty = "&str", value = "mod_id" },
+  { name = "buttons", ty = "&mut Vec<String>", value = "&mut *buttons" },
+]
+
+[[injection]]
+id = "click"
+kind = "HEAD"
+target = "horizon_client::game::native_hooks::Game<'_>::native_settings_click"
+helper = "click.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "mod_id", ty = "&str", value = "mod_id" },
+  { name = "button", ty = "usize", value = "button" },
+]
+
+# Not hook points: entity event 35 reaches a mod nowhere else.
+[[injection]]
+id = "totem"
+kind = "HEAD"
+target = "horizon_client::game::totem::Game<'_>::totem_event"
+helper = "totem.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "body", ty = "&Body", value = "&body" },
+  { name = "own", ty = "bool", value = "own" },
+]
+
+[[injection]]
+id = "name_tags"
+kind = "HEAD"
+target = "horizon_client::game::names::Game<'_>::name_tag_geometry"
+helper = "name_tags.rs"
+bindings = [
+  { name = "game", ty = "&mut crate::game::Game<'_>", value = "&mut *self" },
+  { name = "camera", ty = "glam::DVec3", value = "camera" },
+  { name = "alpha", ty = "f64", value = "alpha" },
+  { name = "out", ty = "&mut Vec<Vertex>", value = "&mut *out" },
+  { name = "see_through", ty = "&mut Vec<Vertex>", value = "&mut *see_through" },
+]

@@ -1,0 +1,18 @@
+// A count ends with its player's life, and all of them with the world.
+fn potion_hud_tick(game: &mut crate::game::Game<'_>) {
+    use crate::game::{potion_hud as m, potion_hud_players as players};
+    if !game.native_on(m::ID) || !game.native_window() {
+        return;
+    }
+    let Some(own) = game.player.as_ref().map(|p| p.health.dead_or_dying()) else {
+        m::pops(|p| p.clear());
+        return;
+    };
+    if own {
+        let name = game.own_profile_name();
+        m::pops(|p| p.forget(&name));
+    }
+    for other in players::others(game).into_iter().filter(|p| !p.alive) {
+        m::pops(|p| p.forget(&other.name));
+    }
+}
