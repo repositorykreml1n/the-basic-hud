@@ -1,40 +1,37 @@
 # The Basic HUD
 
-A native mod for [Horizon](https://playhorizon.dev).
+![The Basic HUD](assets/cover-0.4.1.png)
 
-## What it shows
+A client-side visual HUD for [Horizon](https://playhorizon.dev). **Move it. Size it. Make it yours.**
 
-- Active effects with their time left. Potion effects are pinned by default; any other effect can be pinned on the mod's settings page, or all of them shown at once.
-- Potions of each kind, golden apples, enchanted golden apples and totems in your inventory.
-- Totems each player has used, above that player's name. Your own count is in the box.
-- Durability of worn armour, elytra and a held shield.
+Thirteen independent widgets: effects, consumables, durability, totem uses, available player health, item cooldowns, coordinates, FPS, ping, speed, CPS, world clock and mini armour. Arrange them directly over the game, tune each style, or use compact icons with useful values. Includes a customizable Tab list and ten interface languages.
 
-The count of a player's totems resets when they die or when you leave the world.
+## 0.4.1
 
-## What it does not do
+[Full update notes in English and Russian](CHANGELOG.md). From the registry's 0.1.0, this adds the visual editor, telemetry widgets, mini armour, Tab customization, localization and protected Save/Discard flows.
 
-- It is not a content mod: a `.hmod` has no code, so a HUD needs a native `.hnmod`, which the launcher compiles into the game.
-- It builds on one Horizon commit only, `68ac6f6` (Minecraft 26.3). Counting totems and writing above a player have no hook point, so it hooks two of the game's own functions. The rest uses hook points but reads the game's internal data.
-- It knows only what the client is told: a totem used out of your sight is not counted.
-- Texts of its own are in English. Effect and item names follow the game's language.
-- Tested on Windows in single player and over LAN with two clients, not on a dedicated server.
+## Install
 
-## Build
+Download `basic_hud-0.4.1.hnmod` from [Releases](https://github.com/repositorykreml1n/the-basic-hud/releases). Install through Horizon's native-mod manager and build with **Performance / Производительная сборка**. The archive contains Rust source; the launcher compiles it into a native instance.
 
-Unit tests:
+**Pinned compatibility:** Minecraft26.3, Horizon `68ac6f647e7022b2c696e81863d7cface28c9416`, horizon-mixins `0d6b103c70633d8fd9443d8d0acd3aadaacedb06`. Do not assume other Nightlies are supported. Dev startup can overflow the stack on this Windows baseline; use Performance.
 
-```
-cargo test
-```
+## Controls
 
-Build the bundle into the game:
+- Right Shift (rebindable), or Options > Mods > The Basic HUD > Settings > Edit HUD.
+- Drag to move; wheel/control buttons to resize; arrows to nudge; snap to align.
+- Tab hides editor controls; ? replays the first-visit tutorial.
+- Save writes changes. Leaving with edits asks Save / Discard changes / Stay. Enter saves and Esc stays in that dialog.
+- Reset requires confirmation and changes the draft until saved.
 
-```
-horizon-launcher native-build mixins/basic_hud --trust-native-code
-```
+## Data boundaries
 
-Native mods run with your rights and are not sandboxed. Read the source before you build it.
+This is visual and client-side. It reads only data the client already has. Missing player health remains unknown. Totem uses outside the client's observation cannot be counted; counts reset on death/leaving. Server-plugin-only cooldowns cannot be read. Single-player ping is labelled Local. Speed/CPS/clock are optional. No FPS gain is promised.
 
-## License
+Native mods run with the player's rights and are not sandboxed. Read the source before installing. No Minecraft assets or game binaries are included. This is not an official Horizon, Mojang or Microsoft product.
 
-MIT. Not made or endorsed by the Horizon project, Mojang or Microsoft. It contains no Minecraft assets.
+## Build and reproduce
+
+Run `cargo test --locked --all-targets` for the pure logic tests (67 executions, including reused unit cases). `python tools/generate-i18n.py` validates and regenerates the 150-key catalog. `python tools/package.py` writes the deterministic .hnmod; its SHA-256 must match the release notes. For native checks, use the official [Horizon mod workflow](https://playhorizon.dev/docs/make-a-mod) against the pinned commit in compatibility.json. Native and runtime verification details are in [the release notes](docs/release-0.4.1.md).
+
+MIT. Copyright repositorykreml1n. Cover illustration generated with OpenAI image generation; gameplay UI in the illustration is promotional artwork.

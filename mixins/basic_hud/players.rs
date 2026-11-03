@@ -3,6 +3,7 @@
 use super::Game;
 
 pub(super) struct Player {
+    pub id: u32,
     pub name: String,
     pub at: [f64; 3],
     pub alive: bool,
@@ -14,6 +15,7 @@ pub(super) fn others(game: &Game<'_>) -> Vec<Player> {
         for (conn, m) in &host.models {
             if let Some(g) = host.hub.guest(*conn) {
                 out.push(Player {
+                    id: m.id,
                     name: g.name.clone(),
                     at: [m.position.x, m.position.y, m.position.z],
                     alive: m.alive(),
@@ -24,6 +26,7 @@ pub(super) fn others(game: &Game<'_>) -> Vec<Player> {
     for (id, name) in game.remote_player_names() {
         if let Some(m) = game.mobs.iter().find(|m| m.id == id) {
             out.push(Player {
+                id,
                 name,
                 at: [m.position.x, m.position.y, m.position.z],
                 alive: m.alive(),

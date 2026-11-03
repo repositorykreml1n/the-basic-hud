@@ -1,10 +1,10 @@
 [package]
 name = "horizon-mod-basic-hud"
-version = "0.1.0"
+version = "0.4.1"
 edition = "2024"
 license = "MIT"
 publish = false
-description = "The Basic HUD, a native Horizon mod: effect timers, consumable counts, totem pops and armour durability."
+description = "The Basic HUD, a native Horizon mod: visual client HUD and in-game editor: effect timers, consumable counts, totem pops, armour durability, coordinates, telemetry and player health."
 
 # The mod's logic and its tests: the same file the bundle adds to the game.
 [lib]
