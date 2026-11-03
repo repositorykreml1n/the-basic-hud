@@ -32,3 +32,36 @@ SHA-256: `36431d3a2d810e2aefbd8611767a80f9184e3df032e4cc2b9b9fd9398f794560`
 Десять языков, обучение только при первом входе и затем через «?». Сброс требует подтверждения, а выход с правками предлагает «Сохранить / Выйти без сохранения / Остаться». При ошибке записи черновик сохраняется в редакторе для повторной попытки.
 
 Для установки выбирайте «Производительная сборка». Поддерживается закреплённый Horizon68ac6f6; поддержка других Nightly требует отдельной проверки.
+
+
+## Українською
+
+Велике оновлення після 0.1.0: редактор просто поверх гри та 13 незалежних віджетів. Перетягуйте блоки, змінюйте їхній розмір, кольори й прозорість. Додано FPS, координати, час відновлення предметів, доступні клієнту дані здоров’я гравців, мініброню біля панелі швидкого доступу та налаштування списку Tab із числовим пінгом і сортуванням. Режим «Значки + значення» залишає ×16 і 1:45 без довгих назв. Швидкість згладжено та вимкнено за замовчуванням; пінг в одиночній грі позначено як локальний.
+
+Десять мов інтерфейсу. Навчання відкривається під час першого входу в налаштування, а потім — через «?». Скидання потребує підтвердження. Вихід зі змінами пропонує зберегти їх, відкинути або залишитися в редакторі. Помилка запису не видаляє чернетку.
+
+Minecraft 26.3, закріплений Horizon 68ac6f6; обирайте профіль Performance. Сумісність з іншими Nightly не заявлена. Мод працює лише на клієнті: невідоме здоров’я залишається невідомим, а таймери серверних плагінів недоступні. Приріст FPS не обіцяється.
+
+## Deutsch
+
+Ein großes Update gegenüber 0.1.0: ein Editor direkt über dem Spiel und 13 unabhängige Widgets. Verschiebe die Anzeigen und passe Größe, Farben und Transparenz einzeln an. Neu sind FPS, Koordinaten, Gegenstands-Abklingzeiten, dem Client bekannte Gesundheitswerte anderer Spieler, eine kleine Rüstungsanzeige neben der Schnellzugriffsleiste und eine anpassbare Tab-Liste mit numerischem Ping und Sortierung. „Symbole + Werte“ zeigt ×16 und 1:45 ohne lange Namen. Die Geschwindigkeitsanzeige ist geglättet und standardmäßig aus; im Einzelspieler wird der Ping als lokal gekennzeichnet.
+
+Zehn Oberflächensprachen. Die Einführung erscheint beim ersten Besuch der Einstellungen, danach über „?“. Zurücksetzen erfordert eine Bestätigung. Beim Verlassen mit Änderungen stehen Speichern, Verwerfen und Im Editor bleiben zur Wahl. Ein Schreibfehler lässt den Entwurf erhalten.
+
+Minecraft 26.3, festgelegter Horizon-Stand 68ac6f6; verwende das Profil Performance. Andere Nightlies werden nicht als kompatibel angegeben. Das Mod arbeitet nur clientseitig: unbekannte Gesundheit bleibt unbekannt, und reine Server-Plugin-Timer sind nicht verfügbar. Ein FPS-Zuwachs wird nicht versprochen.
+
+## Français
+
+Une mise à jour majeure depuis la version 0.1.0 : un éditeur directement superposé au jeu et 13 widgets indépendants. Déplacez chaque bloc et réglez sa taille, ses couleurs et sa transparence. Nouveautés : FPS, coordonnées, délais de récupération des objets, santé des joueurs connue du client, petite vue de l’armure près de la barre d’accès rapide et liste Tab personnalisable avec ping numérique et tri. Le mode « Icônes + valeurs » conserve ×16 et 1:45 sans les noms longs. La vitesse est lissée et désactivée par défaut ; en solo, le ping est indiqué comme local.
+
+Dix langues d’interface. Le tutoriel apparaît à la première visite des paramètres, puis reste accessible avec « ? ». La réinitialisation demande confirmation. En quittant avec des modifications, vous pouvez enregistrer, abandonner les changements ou rester dans l’éditeur. Une erreur d’écriture conserve le brouillon.
+
+Minecraft 26.3, version précise de Horizon 68ac6f6 ; choisissez le profil Performance. La compatibilité avec d’autres Nightly n’est pas annoncée. Le mod fonctionne uniquement côté client : une santé inconnue reste inconnue et les délais propres aux plugins serveur ne sont pas disponibles. Aucun gain de FPS n’est promis.
+
+## Español
+
+Una gran actualización desde la versión 0.1.0: un editor superpuesto al juego y 13 widgets independientes. Arrastra cada bloque y ajusta su tamaño, colores y transparencia. Se añaden FPS, coordenadas, tiempos de recarga de objetos, la salud de jugadores que conoce el cliente, una vista pequeña de la armadura junto a la barra de acceso rápido y una lista Tab personalizable con ping numérico y ordenación. «Iconos + valores» conserva ×16 y 1:45 sin nombres largos. La velocidad se muestra de forma más estable y está desactivada por defecto; en una partida individual, el ping se indica como local.
+
+Diez idiomas de interfaz. El tutorial aparece en la primera visita a los ajustes y después se abre con «?». Restablecer requiere confirmación. Al salir con cambios puedes guardar, descartar los cambios o permanecer en el editor. Un error de escritura conserva el borrador.
+
+Minecraft 26.3, versión concreta de Horizon 68ac6f6; elige el perfil Performance. No se afirma compatibilidad con otras Nightly. El mod funciona solo en el cliente: la salud desconocida sigue siendo desconocida y no están disponibles los temporizadores exclusivos de plugins del servidor. No se promete un aumento de FPS.

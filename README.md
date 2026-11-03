@@ -8,7 +8,7 @@ Thirteen independent widgets: effects, consumables, durability, totem uses, avai
 
 ## 0.4.1
 
-[Full update notes in English and Russian](CHANGELOG.md). From the registry's 0.1.0, this adds the visual editor, telemetry widgets, mini armour, Tab customization, localization and protected Save/Discard flows.
+[English update notes with Russian, Ukrainian, German, French and Spanish summaries](CHANGELOG.md). From the registry's 0.1.0, this adds the visual editor, telemetry widgets, mini armour, Tab customization, localization and protected Save/Discard flows.
 
 ## Install
 
