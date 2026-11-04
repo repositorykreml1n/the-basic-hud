@@ -251,9 +251,10 @@ fn content_height(selected: Option<m::Widget>, tab_subpanel: bool) -> f32 {
             Some(m::Widget::Fps) => 260.0,
             Some(m::Widget::ArmorMini) => 246.0,
             Some(m::Widget::Effects) => 228.0,
+            Some(m::Widget::Pickups) => 246.0,
             Some(w) if w.supports_icons_only() => 212.0,
             Some(_) => 196.0,
-            None => 300.0,
+            None => m::WIDGETS.len() as f32 * 15.0 + 105.0,
         }
     }
 }
@@ -690,6 +691,15 @@ pub(super) fn draw(game: &mut Game<'_>, batch: &mut HudBatch) -> bool {
                 draw_btn(game, batch, [drawer_x + drawer_w - 32.0, y, 28.0, 13.0], all_btn_text, all_bg, 0xFF_FFFF);
             }
 
+            if sel == m::Widget::Pickups && can_draw(y, 14.0) {
+                let label = i18n::tr(&language, "Display time:");
+                help_line(game, batch, label, [drawer_x + 5.0, y + 3.0], (drawer_w - 68.0).max(1.0), 0xDD_DDDD);
+                let value = i18n::fmt(&language, "{0} s", &[&draft_clone.pickup_seconds.to_string()]);
+                draw_btn(game, batch, [drawer_x + drawer_w - 62.0, y, 14.0, 13.0], "-", 0xCC2B_3444, 0xFF_FFFF);
+                help_line(game, batch, &value, [drawer_x + drawer_w - 46.0, y + 3.0], 27.0, 0xFF_FFFF);
+                draw_btn(game, batch, [drawer_x + drawer_w - 18.0, y, 14.0, 13.0], "+", 0xCC2B_3444, 0xFF_FFFF);
+            }
+
             // If FPS: fps_label, fps_lows, fps_auto, plus scale note
             if sel == m::Widget::Fps {
                 if can_draw(y, 14.0) {
@@ -760,7 +770,7 @@ pub(super) fn draw(game: &mut Game<'_>, batch: &mut HudBatch) -> bool {
                 game.native_text(batch, "Enter / Esc", [drawer_x + 6.0, prompt_y + 11.0], 0xDDDDDD, true);
             }
         } else {
-            // Widget List view (all 13 widgets)
+            // Widget List view
             let mut y = content_y + 2.0 - cur_scroll;
             for w in m::WIDGETS {
                 if can_draw(y, 13.0) {
@@ -1612,6 +1622,20 @@ pub(super) fn mouse(game: &mut Game<'_>, pressed: bool, right: bool) -> bool {
                         }
                     });
                     return true;
+                }
+
+                if sel == m::Widget::Pickups {
+                    let minus = can_hit(y, 13.0, [drawer_x + drawer_w - 62.0, y, 14.0, 13.0]);
+                    let plus = can_hit(y, 13.0, [drawer_x + drawer_w - 18.0, y, 14.0, 13.0]);
+                    if minus || plus {
+                        EDITOR.with(|e| {
+                            if let Some(ed) = e.borrow_mut().as_mut() {
+                                ed.draft.pickup_seconds = if plus { ed.draft.pickup_seconds.saturating_add(1) }
+                                    else { ed.draft.pickup_seconds.saturating_sub(1) }.clamp(1, 60);
+                            }
+                        });
+                        return true;
+                    }
                 }
 
                 // If FPS: toggles for fps_label, fps_lows, fps_auto

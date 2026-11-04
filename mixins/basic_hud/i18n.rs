@@ -39,6 +39,7 @@ const ROWS: &[(&str, [&str; 9])] = &[
     ("Coordinates", ["Координаты", "Координати", "Koordinaten", "Coordonnées", "Coordenadas", "Coordenadas", "Współrzędne", "Koordinatlar", "Coordinate"]),
     ("Corner", ["Угол", "Кут", "Ecke", "Coin", "Esquina", "Canto", "Róg", "Köşe", "Angolo"]),
     ("Discard changes", ["Выйти без сохранения", "Вийти без збереження", "Ohne Speichern verlassen", "Quitter sans enregistrer", "Salir sin guardar", "Sair sem salvar", "Wyjdź bez zapisywania", "Kaydetmeden çık", "Esci senza salvare"]),
+    ("Display time:", ["Время показа:", "Час показу:", "Anzeigezeit:", "Temps d'affichage :", "Tiempo de visualización:", "Tempo de exibição:", "Czas wyświetlania:", "Görüntüleme süresi:", "Tempo di visualizzazione:"]),
     ("Done", ["Готово", "Готово", "Fertig", "Terminé", "Listo", "Concluído", "Gotowe", "Tamam", "Fatto"]),
     ("Dur. numbers:", ["Числа прочности:", "Числа міцності:", "Haltb.-Zahlen:", "Chiffres durabilité :", "Núm. de durabilidad:", "Núm. de durabilidade:", "Wartości wytrzymałości:", "Dayanıklılık sayıları:", "Numeri durata:"]),
     ("Durability", ["Прочность", "Міцність", "Haltbarkeit", "Durabilité", "Durabilidad", "Durabilidade", "Wytrzymałość", "Dayanıklılık", "Durabilità"]),
@@ -98,6 +99,7 @@ const ROWS: &[(&str, [&str; 9])] = &[
     ("Player count:", ["Число игроков:", "Кількість гравців:", "Spieleranzahl:", "Nombre de joueurs :", "Cantidad de jugadores:", "Quantidade de jogadores:", "Liczba graczy:", "Oyuncu sayısı:", "Numero giocatori:"]),
     ("Players: {0}", ["Игроки: {0}", "Гравці: {0}", "Spieler: {0}", "Joueurs : {0}", "Jugadores: {0}", "Jogadores: {0}", "Gracze: {0}", "Oyuncular: {0}", "Giocatori: {0}"]),
     ("Potions, apples, totems", ["Зелья, яблоки, тотемы", "Зілля, яблука, тотеми", "Tränke, Äpfel, Totems", "Potions, pommes, totems", "Pociones, manzanas, tótems", "Poções, maçãs, totens", "Mikstury, jabłka, totemy", "İksirler, elmalar, totemler", "Pozioni, mele, totem"]),
+    ("Recent pickups", ["Недавний подбор", "Нещодавній підбір", "Kürzlich aufgehoben", "Ramassages récents", "Recogidas recientes", "Coletas recentes", "Ostatnio podniesione", "Son toplananlar", "Raccolte recenti"]),
     ("Reset", ["Сбросить", "Скинути", "Zurücksetzen", "Réinitialiser", "Restablecer", "Redefinir", "Resetuj", "Sıfırla", "Reimposta"]),
     ("Reset All", ["Сбросить всё", "Скинути все", "Alles zurücksetzen", "Tout réinitialiser", "Restablecer todo", "Redefinir Tudo", "Zresetuj wszystko", "Tümünü Sıfırla", "Ripristina tutto"]),
     ("Reset Tab", ["Сбросить Tab", "Скинути Tab", "Tab zurücksetzen", "Réinitialiser Tab", "Restablecer Tab", "Redefinir Tab", "Zresetuj Tab", "Tab'ı sıfırla", "Ripristina Tab"]),
@@ -158,6 +160,7 @@ const ROWS: &[(&str, [&str; 9])] = &[
     ("ms", ["мс", "мс", "ms", "ms", "ms", "ms", "ms", "ms", "ms"]),
     ("pinned", ["закреплённые", "закріплені", "angeheftet", "épinglés", "fijados", "fixados", "przypięte", "sabitlenmiş", "fissati"]),
     ("unknown", ["неизвестно", "невідомо", "unbekannt", "inconnu", "desconocido", "desconhecido", "nieznany", "bilinmiyor", "sconosciuto"]),
+    ("{0} s", ["{0} с", "{0} с", "{0} s", "{0} s", "{0} s", "{0} s", "{0} s", "{0} s", "{0} s"]),
 ];
 
 fn column(language: &str) -> usize {

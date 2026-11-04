@@ -10,7 +10,7 @@ KEYS = ROOT / "translations/keys.json"
 
 def main():
     rows = []
-    for number in range(1, 4):
+    for number in range(1, 5):
         rows.extend(json.loads((MOD / f"translations/part{number}.json").read_text(encoding="utf-8-sig")))
     expected = set(json.loads(KEYS.read_text(encoding="utf-8")))
     found = set()

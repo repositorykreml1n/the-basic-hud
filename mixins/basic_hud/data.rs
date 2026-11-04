@@ -92,6 +92,7 @@ pub(super) fn durability(game: &Game<'_>, stack: &ItemStack) -> Option<(u32, u32
 
 /// Reset all transient/sampled client data (on world leave, disconnect, or mod disabled).
 pub(super) fn clear_all() {
+    crate::game::basic_hud_pickup_data::clear();
     HEALTH_CACHE.with(|c| c.borrow_mut().clear());
     SPEED_STATE.with(|s| *s.borrow_mut() = SpeedState::default());
     PING_CACHE.with(|p| {
@@ -263,6 +264,7 @@ pub(super) fn frame(game: &mut Game<'_>, elapsed: Duration) {
         clear_all();
         return;
     };
+    crate::game::basic_hud_pickup_data::frame(game);
     if !game.native_playing() {
         SPEED_STATE.with(|s| {
             let mut state = s.borrow_mut();
@@ -686,6 +688,9 @@ pub(super) fn collect(
                 }
             }
 
+            m::Widget::Pickups => {
+                rows = crate::game::basic_hud_pickup_data::rows(game, config, preview);
+            }
             m::Widget::ArmorMini => {} // Item models and bars share a separate renderer/hitbox.
             m::Widget::Clock => {
                 if config.enabled(m::Widget::Clock) {

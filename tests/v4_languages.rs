@@ -29,3 +29,13 @@ fn language_variants_and_fallback_are_safe() {
     assert_eq!(i18n::next_language("it_it",1),"auto");
     assert_eq!(i18n::language_name("ru_ru"),"Русский");
 }
+
+#[test]
+fn recent_pickup_settings_exist_in_all_translated_languages() {
+    for &(code, _) in i18n::LANGUAGES.iter().skip(2) {
+        for key in ["Recent pickups", "Display time:"] {
+            assert_ne!(i18n::tr(code, key), key, "missing {key} in {code}");
+        }
+        assert!(i18n::fmt(code, "{0} s", &["5"]).contains('5'));
+    }
+}

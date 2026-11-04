@@ -9,7 +9,7 @@ use std::collections::{BTreeSet, HashMap};
 /// The mod's id (its settings folder), name and version.
 pub const ID: &str = "basic_hud";
 pub const NAME: &str = "The Basic HUD";
-pub const VERSION: &str = "0.4.1";
+pub const VERSION: &str = "0.5.0";
 pub const GUIDE_SEEN_KEY: &str = "guide_seen";
 pub const DESCRIPTION: &str = "Visual client HUD and in-game editor: effect timers, consumable counts, totem pops, armour durability, coordinates, telemetry and player health.";
 #[allow(dead_code)] // Retained for older helpers using the runtime's public interface.
@@ -27,7 +27,7 @@ pub const TOTEM_ITEM: &str = "minecraft:totem_of_undying";
 /// Beside a count of totems used.
 pub const POPPED: &str = "Totems used";
 
-/// The 13 independent widgets supported by the Basic HUD.
+/// The 14 independent widgets supported by the Basic HUD.
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub enum Widget {
     Effects,
@@ -43,9 +43,10 @@ pub enum Widget {
     Cps,
     Clock,
     ArmorMini,
+    Pickups,
 }
 
-pub const WIDGETS: [Widget; 13] = [
+pub const WIDGETS: [Widget; 14] = [
     Widget::Effects,
     Widget::Items,
     Widget::Durability,
@@ -59,6 +60,7 @@ pub const WIDGETS: [Widget; 13] = [
     Widget::Cps,
     Widget::Clock,
     Widget::ArmorMini,
+    Widget::Pickups,
 ];
 
 impl Widget {
@@ -77,6 +79,7 @@ impl Widget {
             Widget::Cps => 10,
             Widget::Clock => 11,
             Widget::ArmorMini => 12,
+            Widget::Pickups => 13,
         }
     }
 
@@ -96,6 +99,7 @@ impl Widget {
             10 => Some(Widget::Cps),
             11 => Some(Widget::Clock),
             12 => Some(Widget::ArmorMini),
+            13 => Some(Widget::Pickups),
             _ => None,
         }
     }
@@ -115,6 +119,7 @@ impl Widget {
             Widget::Cps => "cps",
             Widget::Clock => "clock",
             Widget::ArmorMini => "armor_mini",
+            Widget::Pickups => "pickups",
         }
     }
 
@@ -133,6 +138,7 @@ impl Widget {
             "cps" => Some(Widget::Cps),
             "clock" => Some(Widget::Clock),
             "armor_mini" | "armormini" => Some(Widget::ArmorMini),
+            "pickups" => Some(Widget::Pickups),
             _ => None,
         }
     }
@@ -165,6 +171,8 @@ impl Widget {
             (Widget::Clock, false) => "Clock",
             (Widget::ArmorMini, true) => "Мини-броня",
             (Widget::ArmorMini, false) => "Mini Armor",
+            (Widget::Pickups, true) => "Недавние подборы",
+            (Widget::Pickups, false) => "Recent pickups",
         }
     }
 
@@ -175,7 +183,8 @@ impl Widget {
             | Widget::Durability
             | Widget::Totems
             | Widget::Cooldowns
-            | Widget::ArmorMini => true,
+            | Widget::ArmorMini
+            | Widget::Pickups => true,
             _ => false,
         }
     }
@@ -630,7 +639,7 @@ pub struct Config {
     /// Index into [`CORNERS`].
     pub corner: usize,
     pub pinned: BTreeSet<String>,
-    pub widgets: [WidgetConfig; 13],
+    pub widgets: [WidgetConfig; 14],
     pub snap: bool,
     pub health_tags: bool,
     pub fps_lows: bool,
@@ -638,6 +647,8 @@ pub struct Config {
     pub fps_auto: bool,
     pub mini_anchor: bool,
     pub mini_numbers: bool,
+    /// Seconds since the last pickup of this item, clamped to 1..=60.
+    pub pickup_seconds: u32,
     pub tutorial_seen: bool,
     pub tab: TabConfig,
     pub unknown: Vec<(String, String)>,
@@ -654,7 +665,7 @@ fn corner_positions(corner: usize) -> [(f32, f32); 4] {
     }
 }
 
-pub fn default_widgets(corner: usize) -> [WidgetConfig; 13] {
+pub fn default_widgets(corner: usize) -> [WidgetConfig; 14] {
     let cp = corner_positions(corner);
     let ping_x = if corner % 2 == 0 { 0.99 } else { 0.01 };
     let ping_y = if corner % 2 == 0 { 0.02 } else { 0.17 };
@@ -686,6 +697,8 @@ pub fn default_widgets(corner: usize) -> [WidgetConfig; 13] {
         WidgetConfig::new(false, 0.50, 0.02),
         // 12: ArmorMini (anchored by default)
         WidgetConfig::new(true, 0.55, 0.90),
+        // 13: Recent pickups (right side, clear of the default ping).
+        WidgetConfig::new(true, 0.99, 0.40),
     ]
 }
 
@@ -708,6 +721,7 @@ impl Default for Config {
             fps_auto: true,
             mini_anchor: true,
             mini_numbers: false,
+            pickup_seconds: 5,
             tutorial_seen: false,
             tab: TabConfig::default(),
             unknown: Vec::new(),
@@ -817,6 +831,8 @@ impl Config {
         if widget == Widget::ArmorMini {
             self.mini_anchor = true;
             self.mini_numbers = false;
+        } else if widget == Widget::Pickups {
+            self.pickup_seconds = def.pickup_seconds;
         } else if widget == Widget::Fps {
             self.fps_label = def.fps_label;
             self.fps_lows = def.fps_lows;
@@ -852,7 +868,7 @@ impl Config {
             return config;
         };
 
-        let mut explicit_widgets = [false; 13];
+        let mut explicit_widgets = [false; 14];
         let mut parsed_corner = None;
         let mut version = 1;
 
@@ -931,6 +947,11 @@ impl Config {
                 "fps_auto" => config.fps_auto = value != "0",
                 "mini_anchor" => config.mini_anchor = value != "0",
                 "mini_numbers" => config.mini_numbers = value != "0",
+                "pickup_seconds" => {
+                    if let Ok(seconds) = value.parse::<u32>() {
+                        config.pickup_seconds = seconds.clamp(1, 60);
+                    }
+                }
                 "tutorial_seen" => config.tutorial_seen = value != "0",
                 "tab" => {
                     config.tab = TabConfig::parse(value, &config.tab);
@@ -1060,6 +1081,7 @@ impl Config {
             format!("fps_auto={}", u8::from(self.fps_auto)),
             format!("mini_anchor={}", u8::from(self.mini_anchor)),
             format!("mini_numbers={}", u8::from(self.mini_numbers)),
+            format!("pickup_seconds={}", self.pickup_seconds.clamp(1, 60)),
             format!("tutorial_seen={}", u8::from(self.tutorial_seen)),
             format!("tab={}", self.tab.line()),
         ];
@@ -1480,7 +1502,7 @@ mod tests {
 
     #[test]
     fn widget_customization_and_metadata() {
-        assert_eq!(WIDGETS.len(), 13);
+        assert_eq!(WIDGETS.len(), 14);
         for (i, &w) in WIDGETS.iter().enumerate() {
             assert_eq!(w.index(), i);
             assert_eq!(Widget::from_index(i), Some(w));
